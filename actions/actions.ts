@@ -26,7 +26,10 @@ export const createProfileAction = async (
   formData: FormData
 ) => {
   try {
-    const user = await getAuthUser();
+    const user = await currentUser();
+    if (!user) {
+      throw new Error("You must be logged in!");
+    }
 
     const rawData = Object.fromEntries(formData);
     console.log("✅ rawData:", rawData);
