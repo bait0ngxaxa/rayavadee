@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "mysql"
+  url       = env("DATABASE_URL")
+  // directUrl = env("DIRECT_URL")
+}
+
+model Profile {
+  id           String   @id @default(uuid())
+  clerkId      String   @unique
+  firstName    String
+  lastName     String
+  webName      String
+  email        String
+  profileImage String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  surveys      Survey[]
+}
+
+model Survey {
+  id         String   @id @default(uuid())
+  profileId  String
+  survey1    Int
+  survey2    Int
+  survey3    Int
+  survey4    Int
+  survey5    Int
+  survey6    Int
+  survey7    Int
+  survey8    Int
+  survey9    Int
+  survey10   Int
+  survey11   Int
+  survey12   Int
+  totalScore Int
+  createdAt  DateTime @default(now())
+
+  // ✅ เพิ่มความสัมพันธ์ระหว่าง `Survey` และ `Profile`
+  profile Profile @relation(fields: [profileId], references: [clerkId], onDelete: Cascade)
+}
